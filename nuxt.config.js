@@ -5,11 +5,12 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    // title: process.env.npm_package_name || 'izjing-izjing的个人博客',
+    title: 'izjing - izjing的个人博客',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: 'izjing的个人博客，前端技术交流，前端技术分享，es6，' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -23,13 +24,16 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'element-ui/lib/theme-chalk/index.css'
+    'element-ui/lib/theme-chalk/index.css',
+    '@/assets/css/style.less'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/echarts',
+    '@/plugins/axios'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -50,6 +54,9 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  router: {
+    middleware: 'default'
   },
   /*
   ** Build configuration
