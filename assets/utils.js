@@ -1,4 +1,7 @@
+import Cookies from 'js-cookie'
 
+const TokenKey = 'token'
+// 节流
 export function throttle (func, wait) {
   let timeout
   return function () {
@@ -11,4 +14,10 @@ export function throttle (func, wait) {
       }, wait)
     }
   }
+}
+export function getToken () {
+  return Cookies.get(TokenKey)
+}
+export function setToken (token) {
+  return Cookies.set(TokenKey, token || '')
 }
