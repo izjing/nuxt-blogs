@@ -26,11 +26,11 @@
           <el-image
             style="width: 280px; height: 280px"
             src="https://p.ananas.chaoxing.com/star3/origin/20fdd2116f0cc8c7f9f7360f71bd1ab1.jpg"
-            :preview-src-list="srcList">
-          </el-image>
+            :preview-src-list="srcList"
+          />
         </div>
         <div class="content_img mrt15 shadow">
-          <echarts></echarts>
+          <echarts />
         </div>
       </div>
       <div class="content_route">
@@ -38,7 +38,6 @@
       </div>
       <div class="content_right shadow">
         <div>1111</div>
-
       </div>
     </div>
     <div class="footer">
