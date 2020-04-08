@@ -62,7 +62,6 @@ export default {
   },
   async mounted () {
     const res = await this.$axios.get('/findAllZan')
-    console.log(res)
     if (res.code === 1) {
       this.echartsData = res.data
     }
