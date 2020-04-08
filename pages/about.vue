@@ -1,6 +1,6 @@
 <template>
   <div v-infinite-scroll="aboutLoad" class="about">
-    <div class="ovh">
+    <div v-if="superUser" class="ovh">
       <el-input
         v-model="content"
         type="textarea"
@@ -25,7 +25,7 @@
           </div>
         </el-image>
         <div class="mrl20">
-          <h2>{{ item.userName }}</h2>
+          <h2>{{ item.name }}</h2>
           <div>{{ item.time }}</div>
         </div>
       </div>
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'About',
   async asyncData (context) {
@@ -92,6 +94,11 @@ export default {
         })
       }
     }
+  },
+  computed: {
+    ...mapGetters('userInfo', {
+      superUser: 'superUser'
+    })
   }
 }
 </script>

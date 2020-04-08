@@ -25,7 +25,7 @@
           </div>
         </el-image>
         <div class="mrl20">
-          <h2>{{ item.userName }}</h2>
+          <h2>{{ item.name }}</h2>
           <div>{{ item.time }}</div>
         </div>
       </div>
