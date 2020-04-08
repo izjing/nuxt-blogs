@@ -1,5 +1,5 @@
 <template>
-  <div v-infinite-scroll="mBLoad" class="about">
+  <div v-infinite-scroll="aboutLoad" class="about">
     <div class="ovh">
       <el-input
         v-model="content"
@@ -42,10 +42,10 @@
 
 <script>
 export default {
-  name: 'MessageBoard',
+  name: 'About',
   async asyncData (context) {
     // console.log(context.$axios.get, 11122)
-    const res = await context.$axios.post('/findMb', { page: 1 })
+    const res = await context.$axios.post('/findAbout', { page: 1 })
     console.log(res)
     return {
       list: res.data,
@@ -58,10 +58,11 @@ export default {
     }
   },
   methods: {
-    async mBLoad () {
+    async aboutLoad () {
       let pages = this.page
       pages++
-      const res = await this.$axios.post('/findMb', { page: pages })
+      const res = await this.$axios.post('/findAbout', { page: pages })
+      console.log(res)
       const { code, data, page } = res
       if (code === 1 && data.length > 0) {
         this.page = page
@@ -69,7 +70,7 @@ export default {
       }
     },
     async addAbout () {
-      const res = await this.$axios.post('/addMb', {
+      const res = await this.$axios.post('/addAbout', {
         content: this.content
       })
       if (res.code === 1) {
@@ -99,6 +100,9 @@ export default {
   .about {
     overflow: auto;
     max-height: 1025px;
+    .text_content {
+      min-height: 160px;
+    }
     .text_btn {
       float: right;
     }

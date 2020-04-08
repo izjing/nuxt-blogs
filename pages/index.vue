@@ -55,10 +55,7 @@ export default {
       }
     },
     async dianzan (id) {
-      const obj = {
-        id
-      }
-      const res = await this.$axios.post('/dianzan', obj)
+      const res = await this.$axios.post('/dianzan', { id })
       const { code } = res
       if (code === 1) {
         this.list.forEach((item, index) => {
