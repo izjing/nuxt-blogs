@@ -5,7 +5,7 @@
   "author": "izjing",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "dev": "cross-env BASE_URL=http://127.0.0.1:7001/ NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
     "start": "PORT=3002 nuxt start",
     "generate": "nuxt generate",
@@ -18,6 +18,7 @@
     "element-ui": "^2.13.0",
     "js-cookie": "^2.2.1",
     "koa": "^2.6.2",
+    "mavon-editor": "^2.8.3",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {

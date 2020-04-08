@@ -33,6 +33,7 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/echarts',
+    '@/plugins/vue-mavon-editor',
     '@/plugins/axios'
   ],
   /*
@@ -54,6 +55,9 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  env: {
+    BASE_URL: process.env.BASE_URL
   },
   // router: {
   //   middleware: 'default'
