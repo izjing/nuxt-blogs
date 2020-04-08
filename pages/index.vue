@@ -1,15 +1,22 @@
 <template>
   <div v-infinite-scroll="load" class="home">
-    <div v-for="item in list" :key="item._id" class="home_img mrt15 shadow">
-      <el-image
-        style="width: 160px; height: 160px"
-        src="https://p.ananas.chaoxing.com/star3/origin/20fdd2116f0cc8c7f9f7360f71bd1ab1.jpg"
-      />
-      <div class="mrl20 flex1">
-        <h3>{{ item.title }}</h3>
-        <div class="mrt15">
-          {{ item.content }}
+    <div v-for="item in list" :key="item._id" class="card mrt15" @click="linkArticle(item._id)">
+      <div class="flex">
+        <el-image
+          style="width: 160px; height: 160px"
+          :src="item.imgUrl"
+        />
+        <div class="mrl20 flex1">
+          <h3>{{ item.title }}</h3>
+          <div class="mrt15">
+            {{ item.describe }}
+          </div>
         </div>
+      </div>
+      <div class="mrt15">
+        <el-button type="success" icon="el-icon-thumb" size="mini" circle @click.stop="dianzan(item._id)" />
+        <!--        <el-button type="success" icon="el-icon-thumb" size="mini" @click="finDianzan" circle></el-button>-->
+        <span>{{ item.dianzan }}</span>
       </div>
     </div>
   </div>
@@ -25,7 +32,7 @@ export default {
     const res = await context.$axios.get('/findwenzhang', { params: { page: 1 } })
     return {
       list: res.data,
-      page: res.page
+      page: res.page || 1
     }
   },
   data () {
@@ -46,6 +53,29 @@ export default {
         this.page = page
         this.list.push(...res.data)
       }
+    },
+    async dianzan (id) {
+      const obj = {
+        id
+      }
+      const res = await this.$axios.post('/dianzan', obj)
+      const { code } = res
+      if (code === 1) {
+        this.list.forEach((item, index) => {
+          if (item._id === id) {
+            const add = this.list[index].dianzan += 1
+            this.$set(this.list[index], 'dianzan', add)
+          }
+        })
+      }
+    },
+    linkArticle (id) {
+      this.$router.push({
+        path: 'article',
+        query: {
+          id
+        }
+      })
     }
   }
 }
@@ -57,11 +87,6 @@ export default {
     overflow: auto;
     border-radius: 20px;
     .home_img {
-      min-height: 200px;
-      padding: 15px;
-      border-radius: 20px;
-      border: 1px solid #e6e6e6;
-      background-color: #ffffff;
       display: flex;
     }
   }
