@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div v-infinite-scroll="mBLoad" class="about">
     <div class="ovh">
       <el-input
         v-model="content"
@@ -58,6 +58,16 @@ export default {
     }
   },
   methods: {
+    async mBLoad () {
+      let pages = this.page
+      pages++
+      const res = await this.$axios.post('/findMb', { page: pages })
+      const { code, data, page } = res
+      if (code === 1 && data.length > 0) {
+        this.page = page
+        this.list.push(...res.data)
+      }
+    },
     async addAbout () {
       const res = await this.$axios.post('/addMb', {
         content: this.content
@@ -74,9 +84,8 @@ export default {
 
 <style scoped lang="less">
   .about {
-    /*.about_content {*/
-    /*  min-height: 160px;*/
-    /*}*/
+    overflow: auto;
+    max-height: 1025px;
     .text_btn {
       float: right;
     }

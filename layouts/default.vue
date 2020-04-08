@@ -15,9 +15,9 @@
           <el-menu-item index="about">
             说说
           </el-menu-item>
-          <el-menu-item index="write">
-            写文章
-          </el-menu-item>
+          <!--          <el-menu-item index="write">-->
+          <!--            写文章-->
+          <!--          </el-menu-item>-->
           <el-menu-item class="login" index="login">
             登陆
           </el-menu-item>
@@ -98,11 +98,7 @@ export default {
     },
     handleScroll () {
       const scrollTop = document.documentElement.scrollTop
-      if (scrollTop > 60) {
-        this.footerButton = true
-      } else {
-        this.footerButton = false
-      }
+      this.footerButton = scrollTop > 60
     },
     clickScroll () {
       document.documentElement.scrollTop = 0
