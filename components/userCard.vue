@@ -1,5 +1,5 @@
 <template>
-  <div class="user_card shadow">
+  <div class="user_card card">
     <template v-if="!isLogin">
       <div>
         账号：<el-input v-model="userInfo.userName" class="input_w" placeholder="请输入账号" />
@@ -118,11 +118,6 @@ export default {
 
 <style scoped lang="less">
   .user_card {
-    min-height: 200px;
-    padding: 15px;
-    border-radius: 20px;
-    border: 1px solid #e6e6e6;
-    background-color: #ffffff;
     .input_w {
       width: 230px;
     }
