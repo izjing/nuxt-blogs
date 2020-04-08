@@ -12,31 +12,39 @@
           <el-menu-item index="home">
             留言
           </el-menu-item>
-          <el-menu-item index="4">
-            记录
+          <el-menu-item index="about">
+            说说
+          </el-menu-item>
+          <el-menu-item index="write">
+            写文章
+          </el-menu-item>
+          <el-menu-item class="login" index="login">
+            登陆
           </el-menu-item>
         </el-menu>
       </div>
     </div>
     <div class="content">
-      <div class="content_user">
+      <div class="flex1 mrr20 content1">
         <user-card />
-        <div class="content_img mrt15 shadow">
-          <h3>公众号</h3>
+        <div class="card mrt15">
+          <h3 class="text_center">
+            公众号
+          </h3>
           <el-image
             style="width: 280px; height: 280px"
             src="https://p.ananas.chaoxing.com/star3/origin/20fdd2116f0cc8c7f9f7360f71bd1ab1.jpg"
             :preview-src-list="srcList"
           />
         </div>
-        <div class="content_img mrt15 shadow">
+        <div class="card mrt15">
           <echarts />
         </div>
       </div>
       <div class="content_route">
         <nuxt />
       </div>
-      <div class="content_right shadow">
+      <div class="card flex1 mrl20 content2">
         <div>1111</div>
       </div>
     </div>
@@ -64,14 +72,18 @@ export default {
     userCard,
     echarts
   },
+  asyncData (context) {
+    console.log(context, 8888)
+  },
   data () {
     return {
-      activeIndex: '',
+      activeIndex: this.$route.name === 'index' ? '' : this.$route.name,
       footerButton: false,
       srcList: ['https://p.ananas.chaoxing.com/star3/origin/20fdd2116f0cc8c7f9f7360f71bd1ab1.jpg']
     }
   },
   beforeMount () {
+    console.log(this.$route)
     window.addEventListener('scroll', throttle(this.handleScroll, 500))
   },
   beforeDestroy () {
@@ -119,75 +131,118 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-#default {
-
-  .header {
-    background-color: #ffffff;
-    .header_w {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 1280px;
-      margin: 0 auto;
-      h1 {
-        padding: 0 20px;
-        width: 120px;
-      }
-      .el-menu-demo {
-        flex: 1;
-      }
-    }
+.login {
+  display: none;
+}
+@media only screen and (max-width: 769px) {
+  // 区分移动端pc端的样式
+  .content1, .content2, .footer {
+    display: none;
   }
-  .content {
-    display: flex;
-    width: 1280px;
-    margin: 15px auto 25px;
-    /*div {*/
-    /*  border: 1px solid #000;*/
-    /*}*/
-    .content_user {
-      flex: 1;
-      margin-right: 20px;
-      .content_img {
-        min-height: 200px;
-        padding: 15px;
-        border-radius: 20px;
-        border: 1px solid #e6e6e6;
-        background-color: #ffffff;
-        h3 {
-          text-align: center;
+  .login {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1270px) {
+  // 区分中屏幕的样式
+  #default {
+
+    .header {
+      background-color: #ffffff;
+      .header_w {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1280px;
+        margin: 0 auto;
+        h1 {
+          padding: 0 20px;
+          width: 120px;
+        }
+        .el-menu-demo {
+          flex: 1;
         }
       }
     }
-    .content_route {
-      flex: 3;
-    }
-    .content_right {
-      flex: 1;
-      margin-left: 20px;
-      border-radius: 20px;
-      border: 1px solid #e6e6e6;
-      background-color: #ffffff;
-
-    }
-  }
-  .footer {
-    font-size: 12px;
-    p {
-      text-align: center;
-      color: #7F828B;
-      a {
-        color: #7F828B;
+    .content {
+      display: flex;
+      width: 1280px;
+      margin: 15px auto 25px;
+      .content_route {
+        flex: 3;
       }
     }
-    .footer_button {
-      position: fixed;
-      bottom: 50px;
-      right: 10px;
+    .footer {
+      font-size: 12px;
+      p {
+        text-align: center;
+        color: #7F828B;
+        a {
+          color: #7F828B;
+        }
+      }
+      .footer_button {
+        position: fixed;
+        bottom: 50px;
+        right: 10px;
+      }
+
     }
 
   }
+  .content2 {
+    display: none;
+  }
+}
 
+@media only screen and (min-width: 1270px){
+  // 区分大屏幕的样式
+  #default {
+
+    .header {
+      background-color: #ffffff;
+      .header_w {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1280px;
+        margin: 0 auto;
+        h1 {
+          padding: 0 20px;
+          width: 120px;
+        }
+        .el-menu-demo {
+          flex: 1;
+        }
+      }
+    }
+    .content {
+      display: flex;
+      width: 1280px;
+      margin: 15px auto 25px;
+      .content_route {
+        flex: 3;
+      }
+    }
+    .footer {
+      font-size: 12px;
+      p {
+        text-align: center;
+        color: #7F828B;
+        a {
+          color: #7F828B;
+        }
+      }
+      .footer_button {
+        position: fixed;
+        bottom: 50px;
+        right: 10px;
+      }
+
+    }
+
+  }
 }
 
 </style>
