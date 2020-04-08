@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: 'About',
+  name: 'MessageBoard',
   async asyncData (context) {
     // console.log(context.$axios.get, 11122)
     const res = await context.$axios.post('/findMb', { page: 1 })

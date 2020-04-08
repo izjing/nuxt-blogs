@@ -9,7 +9,7 @@
           <el-menu-item index="">
             首页
           </el-menu-item>
-          <el-menu-item index="home">
+          <el-menu-item index="MessageBoard">
             留言
           </el-menu-item>
           <el-menu-item index="about">
