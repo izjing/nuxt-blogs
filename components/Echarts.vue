@@ -9,15 +9,21 @@ export default {
   name: 'Echarts',
   data () {
     return {
-      aa: ''
+      echartsData: {
+        zan: 0,
+        user: 0,
+        article: 0,
+        messageBoard: 0,
+        about: 0
+      }
     }
   },
   watch: {
-    aa () {
+    echartsData () {
       this.$echartsInit(this.$refs.echarts, {
         title: {
           text: '日常统计',
-          subtext: '纯属虚构',
+          subtext: '移入显示数量',
           left: 'center'
         },
         tooltip: {
@@ -27,18 +33,20 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: ['直接访问', '用户数量', '访问数量']
+          data: ['所有点赞', '用户数量', '文章数量', '留言数量', '说说数量']
         },
         series: [
           {
-            name: '访问来源',
+            name: '历史统计',
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
             data: [
-              { value: 335, name: '直接访问' },
-              { value: 310, name: '用户数量' },
-              { value: 234, name: '访问数量' }
+              { value: this.echartsData.zan, name: '所有点赞' },
+              { value: this.echartsData.user, name: '用户数量' },
+              { value: this.echartsData.article, name: '文章数量' },
+              { value: this.echartsData.messageBoard, name: '留言数量' },
+              { value: this.echartsData.about, name: '说说数量' }
             ],
             emphasis: {
               itemStyle: {
@@ -52,8 +60,12 @@ export default {
       })
     }
   },
-  mounted () {
-    this.aa = 1
+  async mounted () {
+    const res = await this.$axios.get('/findAllZan')
+    console.log(res)
+    if (res.code === 1) {
+      this.echartsData = res.data
+    }
   }
 }
 </script>
