@@ -19,5 +19,6 @@ export function getToken () {
   return Cookies.get(TokenKey)
 }
 export function setToken (token) {
-  return Cookies.set(TokenKey, token || '')
+  const inFifteenMinutes = new Date(new Date().getTime() + 24 * 59 * 60 * 1000)
+  return Cookies.set(TokenKey, token || '', { expires: inFifteenMinutes })
 }
