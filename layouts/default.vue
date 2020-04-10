@@ -15,9 +15,9 @@
           <el-menu-item index="about">
             说说
           </el-menu-item>
-          <!--          <el-menu-item index="write">-->
-          <!--            写文章-->
-          <!--          </el-menu-item>-->
+          <el-menu-item v-if="superUser" index="write">
+            写文章
+          </el-menu-item>
           <el-menu-item class="login" index="login">
             登陆
           </el-menu-item>
@@ -64,6 +64,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import { throttle } from '../assets/utils'
 import userCard from '~/components/userCard'
 import echarts from '~/components/Echarts'
@@ -89,6 +90,11 @@ export default {
   beforeDestroy () {
     window.removeEventListener('scroll', throttle(this.handleScroll, 500))
   },
+  computed: {
+    ...mapGetters('userInfo', {
+      superUser: 'superUser'
+    })
+  },
   methods: {
     handleSelect (e) {
       this.$router.push({
@@ -104,6 +110,7 @@ export default {
       document.documentElement.scrollTop = 0
     }
   }
+
 }
 </script>
 
