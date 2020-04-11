@@ -14,22 +14,23 @@
         </div>
       </div>
       <div class="mrt15">
-        <el-button type="success" icon="el-icon-thumb" size="mini" circle @click.stop="dianzan(item._id)" />
-        <!--        <el-button type="success" icon="el-icon-thumb" size="mini" @click="finDianzan" circle></el-button>-->
-        <span>{{ item.dianzan }}</span>
+        <div class="about_zan cursor_pointer" @click.stop="dianzan(item._id)">
+          <i :class="['el-icon-thumb',{'zan_color': item.isZan}]" />
+          <span>{{ item.dianzan }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import { mapState } from 'vuex'
 export default {
   components: {
   },
   async asyncData (context) {
     // console.log(context.$axios.get, 11122)
-    const res = await context.$axios.get('/findwenzhang', { params: { page: 1 } })
+    const res = await context.$axios.get('/findwenzhang', { params: { page: 1, userName: context.store.state.userInfo.userName } })
     return {
       list: res.data,
       page: res.page || 1
@@ -39,14 +40,19 @@ export default {
     return {
     }
   },
+  computed: {
+    ...mapState('userInfo', {
+      userName: state => state.userName
+    })
+  },
   mounted () {
-    console.log(this.res)
+    // console.log(this.res)
   },
   methods: {
     async load () {
       let pages = this.page
       pages++
-      const res = await this.$axios.get('/findwenzhang', { params: { page: pages } })
+      const res = await this.$axios.get('/findwenzhang', { params: { page: pages, userName: this.userName } })
       console.log(res)
       const { code, data, page } = res
       if (code === 1 && data.length > 0) {
@@ -62,6 +68,7 @@ export default {
           if (item._id === id) {
             const add = this.list[index].dianzan += 1
             this.$set(this.list[index], 'dianzan', add)
+            this.$set(this.list[index], 'isZan', true)
           }
         })
       }

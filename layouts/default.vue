@@ -45,7 +45,7 @@
         <nuxt />
       </div>
       <div class="card flex1 mrl20 content2">
-        <div>1111</div>
+        <div>待完善~</div>
       </div>
     </div>
     <div class="footer">
@@ -83,17 +83,17 @@ export default {
       srcList: ['https://p.ananas.chaoxing.com/star3/origin/20fdd2116f0cc8c7f9f7360f71bd1ab1.jpg']
     }
   },
+  computed: {
+    ...mapGetters('userInfo', {
+      superUser: 'superUser'
+    })
+  },
   beforeMount () {
     console.log(this.$route)
     window.addEventListener('scroll', throttle(this.handleScroll, 500))
   },
   beforeDestroy () {
     window.removeEventListener('scroll', throttle(this.handleScroll, 500))
-  },
-  computed: {
-    ...mapGetters('userInfo', {
-      superUser: 'superUser'
-    })
   },
   methods: {
     handleSelect (e) {

@@ -33,19 +33,22 @@
         {{ item.content }}
       </div>
       <div class="mrt15">
-        <el-button type="success" icon="el-icon-thumb" size="mini" circle @click="dianzan(item._id)" />
-        <span>{{ item.dianzan }}</span>
+        <div class="about_zan cursor_pointer" @click.stop="dianzan(item._id)">
+          <i :class="['el-icon-thumb',{'zan_color': item.isZan}]" />
+          <span>{{ item.dianzan }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'MessageBoard',
   async asyncData (context) {
     // console.log(context.$axios.get, 11122)
-    const res = await context.$axios.post('/findMb', { page: 1 })
+    const res = await context.$axios.post('/findMb', { page: 1, userName: context.store.state.userInfo.userName })
     console.log(res)
     return {
       list: res.data,
@@ -57,11 +60,16 @@ export default {
       content: ''
     }
   },
+  computed: {
+    ...mapState('userInfo', {
+      userName: state => state.userName
+    })
+  },
   methods: {
     async mBLoad () {
       let pages = this.page
       pages++
-      const res = await this.$axios.post('/findMb', { page: pages })
+      const res = await this.$axios.post('/findMb', { page: pages, userName: this.userName })
       const { code, data, page } = res
       if (code === 1 && data.length > 0) {
         this.page = page
@@ -87,6 +95,7 @@ export default {
           if (item._id === id) {
             const add = this.list[index].dianzan += 1
             this.$set(this.list[index], 'dianzan', add)
+            this.$set(this.list[index], 'isZan', true)
           }
         })
       }

@@ -33,22 +33,25 @@
         {{ item.content }}
       </div>
       <div class="mrt15">
-        <el-button type="success" icon="el-icon-thumb" size="mini" circle @click="dianzan(item._id)" />
-        <span>{{ item.dianzan }}</span>
+        <!--        <el-button type="success" icon="el-icon-thumb" size="mini" circle @click="dianzan(item._id)" />-->
+        <div class="about_zan cursor_pointer" @click="dianzan(item._id)">
+          <i :class="['el-icon-thumb',{'zan_color': item.isZan}]" />
+          <span>{{ item.dianzan }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'About',
   async asyncData (context) {
-    // console.log(context.$axios.get, 11122)
-    const res = await context.$axios.post('/findAbout', { page: 1 })
-    console.log(res)
+    // console.log(context.store.state.userInfo.userName, 11122)
+    const res = await context.$axios.post('/findAbout', { page: 1, userName: context.store.state.userInfo.userName })
+    // console.log(res)
     return {
       list: res.data,
       page: res.page || 1
@@ -59,11 +62,19 @@ export default {
       content: ''
     }
   },
+  computed: {
+    ...mapGetters('userInfo', {
+      superUser: 'superUser'
+    }),
+    ...mapState('userInfo', {
+      userName: state => state.userName
+    })
+  },
   methods: {
     async aboutLoad () {
       let pages = this.page
       pages++
-      const res = await this.$axios.post('/findAbout', { page: pages })
+      const res = await this.$axios.post('/findAbout', { page: pages, userName: this.userName })
       console.log(res)
       const { code, data, page } = res
       if (code === 1 && data.length > 0) {
@@ -84,21 +95,18 @@ export default {
     },
     async dianzan (id) {
       const res = await this.$axios.post('/dianzan', { id })
-      const { code } = res
+      const { code, msg } = res
       if (code === 1) {
+        this.$message.success(msg)
         this.list.forEach((item, index) => {
           if (item._id === id) {
             const add = this.list[index].dianzan += 1
             this.$set(this.list[index], 'dianzan', add)
+            this.$set(this.list[index], 'isZan', true)
           }
         })
       }
     }
-  },
-  computed: {
-    ...mapGetters('userInfo', {
-      superUser: 'superUser'
-    })
   }
 }
 </script>
@@ -118,6 +126,9 @@ export default {
     /*    display: flex;*/
     /*  }*/
     /*}*/
+    .about_zan {
+      max-width: 50px;
+    }
   }
 
 </style>
