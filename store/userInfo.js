@@ -35,6 +35,7 @@ const mutations = {
     Cookie.remove('name')
     Cookie.remove('super')
     Cookie.remove('userName')
+    location.reload()
   }
 }
 const actions = {
@@ -56,6 +57,7 @@ const actions = {
         super: data.super,
         userName: data.userName
       })
+      location.reload()
     }
   }
 }
