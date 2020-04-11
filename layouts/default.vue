@@ -46,6 +46,7 @@
       </div>
       <div class="card flex1 mrl20 content2">
         <div>待完善~</div>
+        <p>该网站现阶段所有内容均为测试内容，网站完善后会全部清除</p>
       </div>
     </div>
     <div class="footer">
