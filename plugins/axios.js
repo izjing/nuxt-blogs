@@ -2,16 +2,14 @@ import { Message } from 'element-ui'
 
 export default function ({ store, redirect, app: { $axios } }) {
   // 数据访问前缀
-  $axios.defaults.baseURL = process.env.BASE_URL || 'http://izjing.com:8080/'
-  // $axios.defaults.baseURL = 'http://izjing.com:8080/'
+  $axios.defaults.baseURL = process.env.BASE_URL || 'http://izjing.com/api/'
+  // $axios.defaults.withCredentials = true
   // request拦截器，我这里设置了一个token，当然你可以不要
   $axios.onRequest((config) => {
     if (store.state.userInfo.token) {
       // config.headers.common.Authorization = `Bearer ${getToken()}`
       config.headers.common.Authorization = store.state.userInfo.token
     }
-    config.headers.common['Access-Control-Allow-Origin'] = '*'
-    config.headers.common.vary = 'Origin'
   })
 
   // response拦截器，数据返回后，你可以先在这里进行一个简单的判断
